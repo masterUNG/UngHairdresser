@@ -14,7 +14,7 @@ class MyDialog {
 
   void processDialog() {
     Get.dialog(WillPopScope(
-      child: const WidgetProcess(),
+      child:  WidgetProcess(color: MyConstant.bg,),
       onWillPop: () async {
         return false;
       },

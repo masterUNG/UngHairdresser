@@ -1,10 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class WidgetProcess extends StatelessWidget {
-  const WidgetProcess({super.key});
+  final Color? color;
+  const WidgetProcess({
+    Key? key,
+    this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator());
+    return Center(child: CircularProgressIndicator(color: color,));
   }
 }

@@ -1,20 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-class WidgetImage extends StatelessWidget {
-  final String? path;
+class WidgetImageInternet extends StatelessWidget {
+  final String path;
   final double? size;
-  const WidgetImage({
+  const WidgetImageInternet({
     Key? key,
-    this.path,
+    required this.path,
     this.size,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      path ?? 'images/logo.png',
+    return Image.network(
+      path,
       width: size,
+      height: size,
     );
   }
 }

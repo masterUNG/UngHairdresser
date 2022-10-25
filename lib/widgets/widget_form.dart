@@ -6,6 +6,7 @@ class WidgetForm extends StatelessWidget {
   final IconData iconData;
   final Function(String) changeFunc;
   final TextInputType? textInputType;
+  final bool? obsecu;
 
   const WidgetForm({
     Key? key,
@@ -13,6 +14,7 @@ class WidgetForm extends StatelessWidget {
     required this.iconData,
     required this.changeFunc,
     this.textInputType,
+    this.obsecu,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,8 @@ class WidgetForm extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 16),
       width: 250,
-      child: TextFormField(keyboardType: textInputType,
+      child: TextFormField(obscureText: obsecu ?? false,
+        keyboardType: textInputType,
         onChanged: changeFunc,
         decoration: InputDecoration(
           filled: true,
