@@ -5,12 +5,14 @@ class WidgetForm extends StatelessWidget {
   final String hint;
   final IconData iconData;
   final Function(String) changeFunc;
+  final TextInputType? textInputType;
 
   const WidgetForm({
     Key? key,
     required this.hint,
     required this.iconData,
     required this.changeFunc,
+    this.textInputType,
   }) : super(key: key);
 
   @override
@@ -18,9 +20,10 @@ class WidgetForm extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 16),
       width: 250,
-      child: TextFormField(
+      child: TextFormField(keyboardType: textInputType,
         onChanged: changeFunc,
-        decoration: InputDecoration(filled: true,
+        decoration: InputDecoration(
+          filled: true,
           suffixIcon: Icon(iconData),
           hintText: hint,
           border: OutlineInputBorder(),

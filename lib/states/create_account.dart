@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:unghairdresser/models/user_model.dart';
 import 'package:unghairdresser/utility/my_constant.dart';
 import 'package:unghairdresser/utility/my_dialog.dart';
 import 'package:unghairdresser/widgets/widget_button.dart';
@@ -67,6 +71,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 changeFunc: (p0) {
                   email = p0.trim();
                 },
+                textInputType: TextInputType.emailAddress,
               ),
               WidgetForm(
                 hint: 'Password :',
@@ -88,7 +93,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     MyDialog(context: context).normalDialog(
                         title: 'No Type User ?',
                         subTitle: 'Please Choose Type User');
-                  } else {}
+                  } else {
+                    processCreateAccount();
+                  }
                 },
               )
             ],
@@ -96,5 +103,30 @@ class _CreateAccountState extends State<CreateAccount> {
         ),
       ),
     );
+  }
+
+  Future<void> processCreateAccount() async {
+    MyDialog(context: context).processDialog();
+
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email!, password: password!)
+        .then((value) async {
+      UserModel userModel = UserModel(
+          name: name!, typeUser: type!, email: email!, password: password!);
+      var user = value.user;
+
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(user!.uid)
+          .set(userModel.toMap())
+          .then((value) {
+        Get.back();
+        Get.back();
+      });
+    }).catchError((onError) {
+      Get.back();
+      MyDialog(context: context)
+          .normalDialog(title: onError.code, subTitle: onError.message);
+    });
   }
 }

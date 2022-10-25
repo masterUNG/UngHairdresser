@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unghairdresser/controllers/app_controller.dart';
 import 'package:unghairdresser/states/authen.dart';
 import 'package:unghairdresser/states/main_customer.dart';
 import 'package:unghairdresser/states/main_hairdresser.dart';
@@ -22,12 +24,18 @@ var getPages = <GetPage<dynamic>>[
 
 String keyPage = MyConstant.keyAuthen;
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) {
+    runApp(const MyApp());
+  });
+
+  
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static AppController controller = Get.put(AppController());
 
   @override
   Widget build(BuildContext context) {
